@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>MDIA 2294</title>
+	
+	<style>
+	    thead{
+	        font-weight:bold;
+	    }
+	    
+	    td{
+	        padding-left:5px;
+	        padding-right:5px;	        
+	    }
+	    
+	    td.sub-total{
+	        text-align:right;	        
+	    }
+	</style>
+</head>
+<body>
+	<h1>MDIA 2294: ACME Corp Invoice</h1>
+	
+	<table>
+	    <thead>
+	        <tr>
+	            <td>ITEM</td>
+	            <td>DESCRIPTION</td>
+	            <td>QTY</td>
+	            <td>PRICE</td>
+	            <td>LINE TOTAL</td>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr>
+	            <td>1</td>
+	            <td><input id="line-1-description" type="text" size="40" value="Anvil" /></td>
+	            <td><input id="line-1-quantity" type="text" size="3" value="5" /></td>
+	            <td><input id="line-1-price" type="text" size="6" value="35.00" /></td>
+	            <td class="sub-total"><span id="line-1"></span></td>
+	        </tr>
+	        <tr>
+	            <td>2</td>
+	            <td><input id="line-2-description" type="text" size="40" value="Rocket Skates (each)" /></td>
+	            <td><input id="line-2-quantity" type="text" size="3" value="2" /></td>
+	            <td><input id="line-2-price" type="text" size="6" value="24.99" /></td>
+	            <td class="sub-total"><span id="line-2"></span></td>
+	        </tr>
+	        <tr>
+	            <td>3</td>
+	            <td><input id="line-3-description" type="text" size="40" value="Giant Magnet" /></td>
+	            <td><input id="line-3-quantity" type="text" size="3" value="1" /></td>
+	            <td><input id="line-3-price" type="text" size="6" value="125.50" /></td>
+	            <td class="sub-total"><span id="line-3"></span></td>
+	        </tr>
+	        <tr>
+	            <td>4</td>
+	            <td><input id="line-4-description" type="text" size="40" value="Ball bearings" /></td>
+	            <td><input id="line-4-quantity" type="text" size="3" value="1000" /></td>
+	            <td><input id="line-4-price" type="text" size="6" value="0.25" /></td>
+	            <td class="sub-total"><span id="line-4"></span></td>
+	        </tr>
+	        <tr>
+	            <td>5</td>
+	            <td><input id="line-5-description" type="text" size="40" value="Portable holes" /></td>
+	            <td><input id="line-5-quantity" type="text" size="3" value="12" /></td>
+	            <td><input id="line-5-price" type="text" size="6" value="15.25" /></td>
+	            <td class="sub-total"><span id="line-5"></span></td>
+	        </tr>
+	    </tbody>
+	    <tfoot>
+	        <tr>
+	            <td colspan="4" style="text-align:right;">SUB TOTAL</td>  
+	            <td class="sub-total"><span id="sub-total"></span></td>	        
+	        </tr>
+	        <tr>
+	            <td colspan="4" style="text-align:right;">DISCOUNT</td>  
+	            <td class="sub-total"><span id="discount"></span></td>	        
+	        </tr>
+	        <tr>
+	            <td colspan="4" style="text-align:right;">TAX</td>  
+	            <td class="sub-total"><span id="tax"></span></td>	        
+	        </tr>
+	        <tr>
+	            <td colspan="4" style="text-align:right;">TOTAL</td>  
+	            <td class="sub-total" style="border-top:solid black 1px"><span id="Total"></span></td>	        
+	        </tr>
+	    </tfoot>	    
+	</table>
+	
+	<div><button id="calculate">Calculate</button></div>
+	<div>NOTE: discounts of 10% are given to orders over $250</div>
+
+	<script>
+
+		// Save the button 
+		//querySelector method is invoked on a document or a specific element
+		const calc_btn = document.querySelector("#calculate");
+		//discountRate is declared as a global constant variable
+		const discountRate = 0.9;
+		//taxRate declared as a global constant variable
+		const taxRate = 0.12;
+
+		//Calculate the total for each line
+		//make a function named 'calc_total'
+		function calc_total(){
+
+			//set line total's initial value 0
+			let line_total = 0;
+
+			// Retrieve the quantities & price for each line
+			//'.vlaue'  property is to get the current value of elements
+			//const is a keyword used to declare a variable with a unchangeable value.
+			//.document refers to the document object in the Document Object Model (DOM)
+			const line1_quantity = document.querySelector("#line-1-quantity").value
+			const line1_price = document.querySelector("#line-1-price").value
+
+			const lin2_quantity = document.querySelector("#line-2-quantity").value
+			const line2_price = document.querySelector("#line-2-price").value
+
+			const line3_quantity = document.querySelector("#line-3-quantity").value
+			const line3_price = document.querySelector("#line-3-price").value
+
+			const line4_quantity = document.querySelector("#line-4-quantity").value
+			const line4_price = document.querySelector("#line-4-price").value
+
+			const line5_quantity = document.querySelector("#line-5-quantity").value
+			const line5_price = document.querySelector("#line-5-price").value
+
+			//line1 total
+			//innerHTML deals with the HTML content inside an element, 
+			//while value is focused on getting or setting the current value of form elements. 
+			line_total = line1_quantity * line1_price;
+			
+			document.querySelector("#line-1").innerHTML = line_total;
+			document.querySelector("#line-1").value = line_total;
+
+			//line2 total
+			line_total = lin2_quantity * line2_price;
+			
+			document.querySelector("#line-2").innerHTML = line_total;
+			document.querySelector("#line-2").value = line_total;
+
+			//line3 total
+			line_total = line3_quantity * line3_price;
+			
+			document.querySelector("#line-3").innerHTML = line_total;
+			document.querySelector("#line-3").value = line_total;
+
+			//line4 total
+			line_total = line4_quantity * line4_price;
+			
+			document.querySelector("#line-4").innerHTML = line_total;
+			document.querySelector("#line-4").value = line_total;
+
+			//line5 total
+			line_total = line5_quantity * line5_price;
+			
+			document.querySelector("#line-5").innerHTML = line_total;
+			document.querySelector("#line-5").value = line_total;
+
+			//set sub total's initial value 0
+			let sub_total = 0
+
+			//sub-total
+
+			//This retrieves the value entered in the input field with the id line-1,2,3,4,5, which is sub_total
+			sub_total = document.querySelector('#line-1').value
+			+ document.querySelector('#line-2').value
+			+ document.querySelector('#line-3').value
+			+ document.querySelector('#line-4').value
+			+ document.querySelector('#line-5').value;
+
+			//set sub_total
+			document.querySelector("#sub-total").innerHTML = sub_total;
+
+
+			//calculate tax with 'discountRate' declared for 10%
+			discount =  sub_total * discountRate
+
+			// display results using 2 decimal places for discount
+			document.querySelector("#discount").innerHTML = discount.toFixed(2);
+
+			//calculate tax with 'taxrate' declared for 0.12
+			tax = sub_total * taxRate
+
+			//display results using 2 decimal places for tax
+			document.querySelector("#tax").innerHTML = tax.toFixed(2);
+
+			//total
+			total = discount + tax
+			//display results using 2 decimal places for total
+			document.querySelector("#Total").innerHTML = total.toFixed(2);
+		}
+
+		   // Run the function above when the calculate button is clicked
+			calc_btn.addEventListener("click", calc_total);	
+	
+	
+	
+    </script>
+</body>
+</html>
